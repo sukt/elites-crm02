@@ -1,7 +1,8 @@
 class CustomersController < ApplicationController
  
   def index
-    @customers = Customer.all
+    # @customers = Customer.all
+    @customers= Customer.page(params[:page])
   end
 
   def new
@@ -14,7 +15,7 @@ class CustomersController < ApplicationController
         redirect_to @customer
       else
         render :new
-    end
+      end
   end
 
   def edit
@@ -28,7 +29,7 @@ class CustomersController < ApplicationController
         redirect_to @customer
       else
         render :edit
-    end
+      end
     
   end
 
