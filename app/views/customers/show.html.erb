@@ -9,8 +9,40 @@
             
             <dt>電子メール</dt>
             <dd style="margin:0px 0px 10px 20px"><%= @customer.email %></dd>
+            
+             <dt>会社名</dt>
+            <dd style="margin:0px 0px 10px 20px"><%= @customer.company.name %></dd>
+        
+        
         </dl>
         <%= link_to '編集',edit_customer_path(@customer), class:"btn btn-default"%>
         <%= link_to '戻る',customers_path, class:"btn btn-default"%>
+
+<!--        追加            -->
+ <hr />
+ <h2>対応履歴</h2>
+      <% @comments.each do |comment| %>
+         <div class="media">
+             <div class="media-body">
+                 <%= simple_format(comment.body) %>
+                 <p class="text-muted">
+                     投稿記事:<%= comment.created_at.strftime('%Y%m%d %H:%M') %>
+                     <%= link_to "削除する",comment_path(comment),method: :delete %>
+                 </p>
+             </div>
+         </div>
+      <% end %>
+      
+ <%= form_for(@comment, url: {controller: :comments,action: :create})do |f| %>
+    <div class="form-group">
+        <%= f.label :body, '対応内容' %><br>
+        <%= f.text_area :body, class: "form-control"%>
+    </div>
+    
+    <%= f.hidden_field :customer_id,value: @customer.id %>
+    <%= f.submit class: "btnbtn-default"%>
+ <% end %>
+
+<!--        ここまで        -->
     </div>
 </div>

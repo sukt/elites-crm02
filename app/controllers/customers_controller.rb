@@ -1,8 +1,13 @@
 class CustomersController < ApplicationController
  
+ before_action :authenticate_user!, only: [:new,:create,:edit,:update,:destroy]
+ 
   def index
     # @customers = Customer.all
-    @customers= Customer.page(params[:page])
+    # @customers= Customer.page(params[:page])
+    
+    @q = Customer.search(params[:q])
+    @customers = @q.result(distinct: true).page(params[:page])
   end
 
   def new
@@ -35,6 +40,9 @@ class CustomersController < ApplicationController
 
   def show
     @customer = Customer.find(params[:id]) 
+    @comment = Comment.new #これをform_forで使用。
+    #@comments = Commnet.where(customer_id: params[:id].to_i)
+    @comments = @customer.comments
   end
 
   def destroy
@@ -49,7 +57,9 @@ class CustomersController < ApplicationController
    params.require(:customer).permit(
      :family_name,
      :given_name,
-     :email
+     :email,
+     :company_id,
+     :post_id
      )
   end
 end

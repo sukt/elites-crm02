@@ -5,6 +5,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Company.create(name:"株式会社ABC不動産",url:"http://www.abc_sample.co.jp/",address:"東京都新宿区東新宿４")
+Company.create(name:"株式会社NOWALL",url:"http://nowall.co.jp/",address:"東京都新宿区西新宿６")
+Company.create(name:"株式会社zzz運輸",url:"http://www.zzz_sample.co.jp/",address:"東京都新宿区北新宿８")
+
+Post.create(position_name: "社長")
+Post.create(position_name: "部長")
+Post.create(position_name: "課長")
+Post.create(position_name: "平社員")
+
 100.times do |index|
  #Customer.create(family_name:"鈴木", given_name:"太郎", email: "customer_#[index}@sparta.com")
     Faker::Config.locale =:ja
@@ -17,6 +27,9 @@
     Customer.create(
         family_name: family_name,
         given_name: given_name,
-        email: email
+        email: email,
+        company_id: rand(1..3),
+        #,を忘れると、データの読み込みに失敗し、表示されない。
+        post_id: rand(1..4)
         )
 end
