@@ -4,7 +4,6 @@
         <h1>顧客詳細</h1>
         <dl>
             <dt>お名前</dt>
-            <!-- <dd style="margin:0px 0px 10px 20px"><%= @customer.family_name %> <%= @customer.given_name %></dd> -->
             <dd style = "margin:0px 0px 10px 20px "><%= @customer.full_name %></dd>
             
             <dt>電子メール</dt>
@@ -23,6 +22,12 @@
  <h2>対応履歴</h2>
       <% @comments.each do |comment| %>
          <div class="media">
+            
+            <div class="media-user">
+                 <%= image_tag comment.user.image_url , :width => "100",:height => "100" %>    
+        　  </div>
+
+
              <div class="media-body">
                  <%= simple_format(comment.body) %>
                  <p class="text-muted">
@@ -33,8 +38,25 @@
          </div>
       <% end %>
       
- <%= form_for(@comment, url: {controller: :comments,action: :create})do |f| %>
+<%= form_for(@comment, url: {controller: :comments,action: :create})do |f| %>
+ 
+<!--基本課題01-->
+    <% if @comment.errors.any? %>
+        <div class ="alert alert-danger">
+            <p><b><%= @comment.errors.count%>件のエラーがあります</b></p>
+            <ul>
+                <% @comment.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+<!--基本課題01ここまで-->
+
     <div class="form-group">
+        <p>
+            <%= image_tag current_user.image_url,:width => "100px",:height => "100px" %>
+        </p>
         <%= f.label :body, '対応内容' %><br>
         <%= f.text_area :body, class: "form-control"%>
     </div>

@@ -7,7 +7,16 @@
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
-
+  
+  <!--基本課題０９-->
+  
+  <div class="field">
+    <%= f.label :image_url %><br />
+    <%= f.url_field :image_url %>
+  </div>
+  
+  <!--０９ここまで-->
+  
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
